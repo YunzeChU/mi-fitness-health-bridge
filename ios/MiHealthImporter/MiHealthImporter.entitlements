@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- TrollStore's documented fallback identity namespace. This is required
+         for system helpers such as the document picker on an unsigned build. -->
+    <key>application-identifier</key>
+    <string>TROLLTROLL.org.example.StructuredHealthKitImporter</string>
+    <key>com.apple.developer.team-identifier</key>
+    <string>TROLLTROLL</string>
+    <key>com.apple.developer.healthkit</key>
+    <true/>
+    <key>keychain-access-groups</key>
+    <array>
+        <string>TROLLTROLL.org.example.StructuredHealthKitImporter</string>
+        <string>com.apple.token</string>
+    </array>
+</dict>
+</plist>

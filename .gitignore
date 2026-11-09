@@ -1,0 +1,48 @@
+# Personal source exports, generated packages, reports, and install artifacts never belong in this repository.
+*.csv
+*.xml
+*.zip
+*.sqlite
+*.db
+*.json
+*.ipa
+*.tipa
+*.xcarchive/
+*.app/
+output/
+outputs/
+private-imports/
+reports/
+__pycache__/
+*.py[cod]
+build/
+DerivedData/
+xcuserdata/
+*.xcuserstate
+
+# Media and document artifacts that could carry personal measurements or paths.
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.heic
+*.pdf
+*.txt
+*.log
+*.tsv
+*.ndjson
+*.xlsx
+*.xls
+*.parquet
+
+# Generated import-set directories are never tracked.
+parts/
+import-set/
+exports/
+
+# Local-only development files are never published.
+converter/tests/
+ios/MiHealthImporterTests/
+
+# The public contract is the only JSON file intentionally tracked.
+!ios/MiHealthImporter/ImportPackage.schema.json

@@ -1,0 +1,52 @@
+name: Build TrollStore IPA
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Run source-only release preflight
+        run: python3 scripts/release_preflight.py --ci
+
+      - name: Build for a physical iPhone without an Apple signing identity
+        working-directory: ios
+        run: |
+          xcodebuild \
+            -project MiHealthImporter.xcodeproj \
+            -scheme MiHealthImporter \
+            -configuration Release \
+            -sdk iphoneos \
+            -destination 'generic/platform=iOS' \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO \
+            build
+
+      - name: Apply HealthKit entitlement and package IPA
+        working-directory: ios
+        run: |
+          APP='build/Build/Products/Release-iphoneos/MiHealthImporter.app'
+          test -d "$APP"
+          /usr/bin/codesign --force --sign - --entitlements MiHealthImporter/MiHealthImporter.entitlements "$APP"
+          /usr/bin/codesign --display --entitlements :- "$APP" 2>&1 | tee healthkit-entitlements.txt
+          /usr/libexec/PlistBuddy -c 'Print :NSHealthUpdateUsageDescription' "$APP/Info.plist"
+          /usr/libexec/PlistBuddy -c 'Print :NSHealthShareUsageDescription' "$APP/Info.plist"
+          mkdir Payload
+          cp -R "$APP" Payload/
+          ditto -c -k --sequesterRsrc --keepParent Payload MiFitnessHealthBridge-trollstore.ipa
+
+      - name: Upload IPA and entitlement inspection
+        uses: actions/upload-artifact@v4
+        with:
+          name: MiFitnessHealthBridge-trollstore
+          path: |
+            ios/MiFitnessHealthBridge-trollstore.ipa
+            ios/healthkit-entitlements.txt
+          if-no-files-found: error
