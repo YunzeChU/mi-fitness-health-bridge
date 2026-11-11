@@ -16,6 +16,9 @@ jobs:
       - name: Run source-only release preflight
         run: python3 scripts/release_preflight.py --ci
 
+      - name: Run synthetic converter tests
+        run: python3 -B -m unittest discover -s converter/tests -v
+
       - name: Build for a physical iPhone without an Apple signing identity
         working-directory: ios
         run: |

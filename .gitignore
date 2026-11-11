@@ -40,9 +40,5 @@ parts/
 import-set/
 exports/
 
-# Local-only development files are never published.
-converter/tests/
-ios/MiHealthImporterTests/
-
 # The public contract is the only JSON file intentionally tracked.
 !ios/MiHealthImporter/ImportPackage.schema.json

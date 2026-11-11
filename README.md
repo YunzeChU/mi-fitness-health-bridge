@@ -47,6 +47,19 @@ python -B converter/build_import_set.py --input "<导出目录>" --output-dir "<
 - 导入集、清单、审计报告、安装包、截图与日志都保留在本地，**不要提交到仓库、不要上传到任何网站**。
 - 单位或含义无法确证的字段不会被写入 Apple 健康，也不会被猜测；原因记录在本地生成目录的审计报告里。
 
+详细规则见：[隐私边界](docs/PRIVACY.md)、[单个导入包格式](docs/IMPORT_PACKAGE.md)、[完整导入集与断点续传](docs/FULL_IMPORT_SET.md)、[公开发布检查表](docs/RELEASE_CHECKLIST.md)。
+
+## 开发与发布
+
+公开仓库只接受源码、文档和合成测试。提交前运行：
+
+```bash
+python -B -m unittest discover -s converter/tests -v
+python -B scripts/release_preflight.py
+```
+
+任何真实导出、生成的导入集、审计报告、IPA、截图、日志或本机路径都不得提交。
+
 ## 许可证
 
 MIT，见 [LICENSE](LICENSE)。
